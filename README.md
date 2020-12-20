@@ -23,6 +23,9 @@ Remember to replace the X with the character you prefer.
 This addon should be enabled by default (otherwise you can enable it within the list of the addons at the character creation).
 When you login with your character it will be displayed around the minimap 
 
+![minimapPNG.PNG]({{site.baseurl}}/minimapPNG.PNG)
+
+
 You can open the UI by using that button, otherwise you can leave a feedback of a specific quest/item/spell/npc by clicking with ALT+Left click on them.
 
 This feedbacks will be sent to the server and will be used by internally used by the staff.
@@ -30,4 +33,9 @@ This feedbacks will be sent to the server and will be used by internally used by
 
 ## Screnshots
 
-Coming soon
+![photo_2020-12-19_20-23-33_LI.jpg]({{site.baseurl}}/photo_2020-12-19_20-23-33_LI.jpg)
+![photo_2020-12-19_20-27-34_LI.jpg]({{site.baseurl}}/photo_2020-12-19_20-27-34_LI.jpg)
+![photo_2020-12-19_23-20-48.jpg]({{site.baseurl}}/photo_2020-12-19_23-20-48.jpg)
+![photo_2020-12-19_23-32-03.jpg]({{site.baseurl}}/photo_2020-12-19_23-32-03.jpg)
+
+
