@@ -1471,7 +1471,7 @@ function FeedbackUI_SetupItem (link)
 				local targetID;
 				if (IsModifiedClick("GENERATEFEEDBACK")) then
 					if ( select(1, ...) and select(1, ...).GetID ) then
-						targetID = SpellBook_GetSpellID(select(1, ...));
+						targetID = SpellBook_GetSpellID(select(1, ...):GetID());
 					else
 						targetID = SpellBook_GetSpellID(this);
 					end
