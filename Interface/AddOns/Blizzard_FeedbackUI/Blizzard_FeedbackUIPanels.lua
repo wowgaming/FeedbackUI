@@ -649,6 +649,12 @@ function (line)
 	--panel.infoString = panel.infoString .. (objName or "") .. inputString;
 	infoTable["text"] = panel.infoString .. inputString;
 
+
+	-- custom
+	infoTable["entityid"] = g_FeedbackUI_feedbackVarsCustom.id
+	infoTable["entitytype"] = g_FeedbackUI_feedbackVarsCustom.type
+	infoTable["entitysubtype"] = g_FeedbackUI_feedbackVarsCustom.subtype
+
 	local indexLine;
 	for index, field in next, FEEDBACKUI_FIELDS do
 		if ( infoTable[field] ) then
@@ -1585,6 +1591,11 @@ function (panel)
 		--panel.infoString = panel.infoString .. (objName or "") .. inputString;
 		infoTable["text"] = panel.infoString .. inputString;
 
+		-- custom
+		infoTable["entityid"] = g_FeedbackUI_feedbackVarsCustom.id
+		infoTable["entitytype"] = g_FeedbackUI_feedbackVarsCustom.type
+		infoTable["entitysubtype"] = g_FeedbackUI_feedbackVarsCustom.subtype
+
 		local indexLine;
 		for index, field in next, FEEDBACKUI_FIELDS do
 			if ( infoTable[field] ) then
@@ -2314,12 +2325,12 @@ function (panel)
 				end
 				prepSurvey = {
 				["name"] = surveyElement.name,
-				["id"] = index, --surveyElement.id,
+				["id"] = surveyElement.id,
 				["objectives"] = surveyElement.objectives,
 				["added"] = time(),
 				["status"] = surveyElement.status,
 				["modified"] = time(),
-				["type"] = surveyElement.type
+				["type"] = surveyElement.type,
 				}
 				table.insert(g_FeedbackUI_surveysTable["Quests"], prepSurvey)
 				g_FeedbackUI_surveysTable["Quests"]["Index"][prepSurvey.id] = #g_FeedbackUI_surveysTable["Quests"];
@@ -4108,6 +4119,11 @@ function (line)
 		inputString = string.gsub(inputString, FEEDBACKUI_DELIMITER, " ");
 		infoTable["text"] = inputString;
 		--panel.infoString = panel.infoString .. (objName or "") .. inputString;
+
+		-- custom
+		infoTable["entityid"] = g_FeedbackUI_feedbackVarsCustom.id
+		infoTable["entitytype"] = g_FeedbackUI_feedbackVarsCustom.type
+		infoTable["entitysubtype"] = g_FeedbackUI_feedbackVarsCustom.subtype
 
 		local indexLine;
 		for index, field in next, FEEDBACKUI_FIELDS do

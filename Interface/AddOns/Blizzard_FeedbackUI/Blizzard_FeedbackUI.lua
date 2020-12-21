@@ -50,6 +50,9 @@ FEEDBACKUI_FIELDS = {
 [41] = "text", -- text the user types in
 [42] = "soundoptions", -- CVARs for sound options
 [43] = "objectname", -- objectname for the bug report
+[44] = "entityid", -- [CUSTOM] id of the quest/npc/item/spell
+[45] = "entitytype", -- [CUSTOM] type of the quest/npc/item/spell
+[46] = "entitysubtype", -- [CUSTOM] type of the quest/npc/item/spell
 }; 
 
 FEEDBACKUI_CVARS = {
@@ -146,6 +149,9 @@ g_FeedbackUI_feedbackVars.PVPStats = {};
 g_FeedbackUI_feedbackVars.PVPStats["combats"] = 0;
 g_FeedbackUI_feedbackVars.PVPStats["deaths"] = 0;
 g_FeedbackUI_feedbackVars.PVPStats["averagelength"] = 0;
+
+-- custom
+g_FeedbackUI_feedbackVarsCustom = {}
 
 g_FeedbackUI_dropdownMenus = {};
 
@@ -1180,6 +1186,10 @@ function FeedbackUI_SetupItem (link)
 		if ( objType == FEEDBACKUI_MISCTYPE and IsUsableItem(id) and rarity > 3 ) then
 			allowSurvey = true;
 		end
+
+		-- custom
+		g_FeedbackUI_feedbackVarsCustom.id = id;
+		g_FeedbackUI_feedbackVarsCustom.type = "Items";
 		
 		FeedbackUI.focus = { ["type"] = "Items", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 		FeedbackUI_SetupWelcome(name, allowSurvey);
@@ -1203,6 +1213,10 @@ function FeedbackUI_SetupItem (link)
 				end
 			end
 			
+			-- custom
+			g_FeedbackUI_feedbackVarsCustom.id = id;
+			g_FeedbackUI_feedbackVarsCustom.type = "Spells";
+
 			FeedbackUI.focus = { ["type"] = "Spells", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 			FeedbackUI_SetupWelcome(name, true);
 			FeedbackUITab4:Click();
@@ -1221,6 +1235,11 @@ function FeedbackUI_SetupItem (link)
 					id, count, name = string.match(link, "talent:(%d+):([-%d]+)|h%[(.-)%]");
 					-- name = GetTalentInfo(tabID, buttonID) .. " (Talent)";
 				end
+
+				-- custom
+				g_FeedbackUI_feedbackVarsCustom.id = id;
+				g_FeedbackUI_feedbackVarsCustom.type = "Spells";
+				g_FeedbackUI_feedbackVarsCustom.subtype = "Talents";
 				
 				FeedbackUI.focus = { ["type"] = "Spells", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 				FeedbackUI_SetupWelcome(name, true);
@@ -1245,6 +1264,11 @@ function FeedbackUI_SetupItem (link)
 						
 					end
 					FeedbackUI_ReindexQuests();
+
+					-- custom
+					g_FeedbackUI_feedbackVarsCustom.id = id;
+					g_FeedbackUI_feedbackVarsCustom.type = "Quests";
+
 					FeedbackUI.focus = { ["type"] = "Quests", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 					FeedbackUI_SetupWelcome(name, true);
 					FeedbackUITab4:Click();
@@ -1674,6 +1698,10 @@ function FeedbackUI_SetupItem (link)
 						--This pretty much only ever happens on the Cosmic map.
 						return;
 					end
+
+					-- custom
+					g_FeedbackUI_feedbackVarsCustom.id = ( areaName .. zoneName );
+					g_FeedbackUI_feedbackVarsCustom.type = "Areas";
 					
 					FeedbackUI.focus = { ["type"] = "Areas", ["modified"] = time(), ["added"] = time(), ["name"] = ( areaName .. zoneName ), ["id"] = ( areaName .. zoneName ) };
 					FeedbackUI_SetupWelcome(areaName .. zoneName, allowSurvey);
@@ -1696,6 +1724,11 @@ function FeedbackUI_SetupItem (link)
 			local oldOutlandButton_OnClick = OutlandButton:GetScript("OnClick");
 			function FeedbackUI_AzerothButton_OnClick (...)
 				if ( IsModifiedClick("GENERATEFEEDBACK") ) then
+
+					-- custom
+					g_FeedbackUI_feedbackVarsCustom.id = FEEDBACKUI_AZEROTH;
+					g_FeedbackUI_feedbackVarsCustom.type = "Areas";
+
 					FeedbackUI.focus = { ["type"] = "Areas", ["modified"] = time(), ["added"] = time(), ["name"] = FEEDBACKUI_AZEROTH, ["id"] = FEEDBACKUI_AZEROTH };
 					FeedbackUI_SetupWelcome(FEEDBACKUI_AZEROTH, allowSurvey);
 					
@@ -1714,6 +1747,10 @@ function FeedbackUI_SetupItem (link)
 			
 			function FeedbackUI_OutlandButton_OnClick (...)
 				if ( IsModifiedClick("GENERATEFEEDBACK") ) then
+					-- custom
+					g_FeedbackUI_feedbackVarsCustom.id = FEEDBACKUI_OUTLANDS;
+					g_FeedbackUI_feedbackVarsCustom.type = "Areas";
+					
 					FeedbackUI.focus = { ["type"] = "Areas", ["modified"] = time(), ["added"] = time(), ["name"] = FEEDBACKUI_OUTLANDS, ["id"] = FEEDBACKUI_OUTLANDS };
 					FeedbackUI_SetupWelcome(FEEDBACKUI_OUTLANDS, allowSurvey);
 					
@@ -1768,6 +1805,10 @@ function FeedbackUI_SetupItem (link)
 					end
 				end
 				
+				-- custom
+				g_FeedbackUI_feedbackVarsCustom.id = id;
+				g_FeedbackUI_feedbackVarsCustom.type = "Mobs";
+
 				FeedbackUI.focus = { ["name"] = spawnName, ["zone"] = zone, ["id"] = id, ["added"] = time(), ["modified"] = time(), ["type"] = "Mobs", ["friendly"] = reactionType }
 				FeedbackUI_SetupWelcome(name);
 				
@@ -1938,6 +1979,10 @@ function FeedbackUI_SetupItem (link)
 			MiniMapVoiceChatFrame:SetScript("OnClick", FeedbackUI_MiniMapVoiceChatFrame_OnClick);
 			
 			function FeedbackUI_SetupVoiceChat ()
+				-- custom
+				g_FeedbackUI_feedbackVarsCustom.id = "Voice Chat";
+				g_FeedbackUI_feedbackVarsCustom.type = "Voice";
+				
 				FeedbackUI.focus = { ["type"] = "Voice", ["name"] = "Voice Chat", ["id"] = "Voice Chat", ["modified"] = time(), ["added"] = time() }
 				FeedbackUI_SetupWelcome(FEEDBACKUI_VOICECHAT, false);
 				if ( not FeedbackUI:IsVisible() ) then
