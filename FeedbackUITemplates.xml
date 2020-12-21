@@ -10,7 +10,7 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile="Interface\TUTORIALFRAME\TutorialFrameBackground.blp" edgeFile="Interface\AddOns\Blizzard_FeedbackUI\UI-Feedback-Border" title="true" frameStrata="BACKGROUND">
+		<Backdrop bgFile="Interface\TUTORIALFRAME\TutorialFrameBackground.blp" edgeFile="Interface\AddOns\FeedbackUI\UI-Feedback-Border" title="true" frameStrata="BACKGROUND">
 			<BackgroundInsets>
 				<AbsInset left="11" right="12" top="12" bottom="11"/>
 			</BackgroundInsets>
@@ -1490,13 +1490,13 @@
 				end
 			</OnClick>
 		</Scripts>
-		<NormalTexture file="Interface\AddOns\Blizzard_FeedbackUI\SurveyFrameAlert">
+		<NormalTexture file="Interface\AddOns\FeedbackUI\SurveyFrameAlert">
 			<Size>
 				<AbsDimension x="34" y="42"/>
 			</Size>
 			<TexCoords left="0" right="0.53125" top="0" bottom="0.6875"/>
 		</NormalTexture>
-		<HighlightTexture file="Interface\AddOns\Blizzard_FeedbackUI\SurveyFrameAlert" alphaMode="ADD">
+		<HighlightTexture file="Interface\AddOns\FeedbackUI\SurveyFrameAlert" alphaMode="ADD">
 			<Size>
 				<AbsDimension x="23" y="42"/>
 			</Size>
@@ -1541,7 +1541,7 @@
 	<Frame name="FeedbackPortalFrame" hidden="false" virtual="true">
 		<Layers>
 			<Layer level="BORDER">
-				<Texture name="$parentTopLeft" file="Interface\AddOns\Blizzard_FeedbackUI\UI-Feedback-Frame.blp">
+				<Texture name="$parentTopLeft" file="Interface\AddOns\FeedbackUI\UI-Feedback-Frame.blp">
 					<Size>
 						<AbsDimension x="51" y="64"/>
 					</Size>
@@ -1550,7 +1550,7 @@
 						<Anchor point="TOPLEFT" relativeto="$parent" relativepoint="TOPLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentTopRight" file="Interface\AddOns\Blizzard_FeedbackUI\UI-Feedback-Frame.blp">
+				<Texture name="$parentTopRight" file="Interface\AddOns\FeedbackUI\UI-Feedback-Frame.blp">
 					<Size>
 						<AbsDimension x="51" y="64"/>
 					</Size>
@@ -1563,14 +1563,14 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentTopMiddle" file="Interface\AddOns\Blizzard_FeedbackUI\UI-Feedback-Frame.blp">
+				<Texture name="$parentTopMiddle" file="Interface\AddOns\FeedbackUI\UI-Feedback-Frame.blp">
 					<TexCoords left="0.1" right="0.52" top="0" bottom=".25"/>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeto="$parentTopLeft" relativepoint="TOPRIGHT"/>
 						<Anchor point="BOTTOMRIGHT" relativeto="$parentTopRight" relativepoint="BOTTOMLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentBottomLeft" file="Interface\AddOns\Blizzard_FeedbackUI\UI-Feedback-Frame.blp">
+				<Texture name="$parentBottomLeft" file="Interface\AddOns\FeedbackUI\UI-Feedback-Frame.blp">
 					<Size>
 						<AbsDimension x="51" y="64"/>
 					</Size>
@@ -1579,7 +1579,7 @@
 						<Anchor point="TOPLEFT" relativeto="$parentTopLeft" relativepoint="BOTTOMLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentBottomRight" file="Interface\AddOns\Blizzard_FeedbackUI\UI-Feedback-Frame.blp">
+				<Texture name="$parentBottomRight" file="Interface\AddOns\FeedbackUI\UI-Feedback-Frame.blp">
 					<Size>
 						<AbsDimension x="51" y="64"/>
 					</Size>
@@ -1588,7 +1588,7 @@
 						<Anchor point="TOPRIGHT" relativeto="$parentTopRight" relativepoint="BOTTOMRIGHT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentBottomMiddle" file="Interface\AddOns\Blizzard_FeedbackUI\UI-Feedback-Frame.blp">
+				<Texture name="$parentBottomMiddle" file="Interface\AddOns\FeedbackUI\UI-Feedback-Frame.blp">
 					<TexCoords left="0.1" right="0.52" top=".45" bottom=".75"/>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeto="$parentBottomLeft" relativepoint="TOPRIGHT"/>

@@ -1041,7 +1041,7 @@ function FeedbackUI_EnableSurvey ()
 	FeedbackUIWelcomeFrameSurveysBtnRight:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");  
 	FeedbackUIWelcomeFrameSurveysTint:SetVertexColor(vr, vg, vb, va);
 	FeedbackUIWelcomeFrameSurveysLabel:SetTextColor(r, g, b, a);
-	FeedbackUIWelcomeFrameSurveysIcon:SetTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Survey");
+	FeedbackUIWelcomeFrameSurveysIcon:SetTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Survey");
 end
 
 --Disable the survey options in the welcome portal. We do this for junk items.
@@ -1056,7 +1056,7 @@ function FeedbackUI_DisableSurvey (objectName)
 	FeedbackUIWelcomeFrameSurveysBtnRight:SetTexture("Interface\\Buttons\\UI-Panel-Button-Disabled");  
 	FeedbackUIWelcomeFrameSurveysTint:SetVertexColor(vr, vg, vb, va);
 	FeedbackUIWelcomeFrameSurveysLabel:SetTextColor(r, g, b, a);
-	FeedbackUIWelcomeFrameSurveysIcon:SetTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Survey-Disabled");
+	FeedbackUIWelcomeFrameSurveysIcon:SetTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Survey-Disabled");
 end
 
 --Configure the actual panels so that they display the appropriate starting options.
@@ -1392,7 +1392,7 @@ function FeedbackUI_SetupItem (link)
 				end
 				
 				tooltip:AddLine(FeedbackUI_BuildTooltipLine(FEEDBACKUI_TOOLTIP_MESSAGE), r, g, b);
-				tooltip:AddTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Blizzard-Tooltip");
+				tooltip:AddTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Blizzard-Tooltip");
 				
 				tooltip:Show();
 				
@@ -1428,7 +1428,7 @@ function FeedbackUI_SetupItem (link)
 				local r, g, b = font.r, font.g, font.b;
 				
 				GameTooltip:AddLine(FeedbackUI_BuildTooltipLine(FEEDBACKUI_TOOLTIP_MESSAGE), r, g, b);
-				GameTooltip:AddTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Blizzard-Tooltip");
+				GameTooltip:AddTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Blizzard-Tooltip");
 				GameTooltip:Show();
 			end
 			
@@ -1894,7 +1894,7 @@ function FeedbackUI_SetupItem (link)
 				
 				if ( g_FeedbackUI_feedbackVars["verbose"] ) then
 					GameTooltip:AddLine(FeedbackUI_BuildTooltipLine(FEEDBACKUI_TOOLTIP_MESSAGE), r, g, b);
-					GameTooltip:AddTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Blizzard-Tooltip");
+					GameTooltip:AddTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Blizzard-Tooltip");
 					GameTooltip:Show();
 				end
 			end
@@ -2006,7 +2006,7 @@ function FeedbackUI_SetupItem (link)
 				
 				
 				GameTooltip:AddLine(FeedbackUI_BuildTooltipLine(FEEDBACKUI_TOOLTIP_MESSAGE), r, g, b);
-				GameTooltip:AddTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Blizzard-Tooltip");
+				GameTooltip:AddTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Blizzard-Tooltip");
 				GameTooltip:Show();
 			end
 			

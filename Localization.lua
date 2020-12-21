@@ -57,7 +57,7 @@ function QuestAlert_SerializeCSVFileToLua(filename)
 		newData = newData .. "g_FeedbackUI_surveysTable[\"Targets\"][\"" .. id .. "\"] = true;\r\n";
 	end
 	
-	DeleteFile("Interface\\AddOns\\Blizzard_FeedbackUI\\output.txt") 
-	AppendToFile("Interface\\AddOns\\Blizzard_FeedbackUI\\output.txt", newData);
+	DeleteFile("Interface\\AddOns\\FeedbackUI\\output.txt") 
+	AppendToFile("Interface\\AddOns\\FeedbackUI\\output.txt", newData);
 end
 

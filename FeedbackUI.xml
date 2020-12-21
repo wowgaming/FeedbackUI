@@ -1,7 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 
-<Script file="Blizzard_FeedbackUIStrings.lua"/>
-<Script file="Blizzard_FeedbackUI.lua"/>
+<Script file="FeedbackUIStrings.lua"/>
+<Script file="FeedbackUI.lua"/>
 
 <Button name="FeedbackUIButton" parent="Minimap" frameStrata="MEDIUM" movable="true">
 	<Size>
@@ -32,9 +32,9 @@
 			</Texture>
 		</Layer>
 	</Layers>
-	<NormalTexture file="Interface\Addons\Blizzard_FeedbackUI\UI-Icon-Blizzard-Up.blp"/>
-	<PushedTexture file="Interface\Addons\Blizzard_FeedbackUI\UI-Icon-Blizzard-Pushed.blp"/>
-	<HighlightTexture file="Interface\Addons\Blizzard_FeedbackUI\UI-Icon-Blizzard-Highlight.blp" alphaMode="ADD"/>
+	<NormalTexture file="Interface\Addons\FeedbackUI\UI-Icon-Blizzard-Up.blp"/>
+	<PushedTexture file="Interface\Addons\FeedbackUI\UI-Icon-Blizzard-Pushed.blp"/>
+	<HighlightTexture file="Interface\Addons\FeedbackUI\UI-Icon-Blizzard-Highlight.blp" alphaMode="ADD"/>
 	<Scripts>
 		<OnLoad>
 			self.tooltipText = MicroButtonTooltipText(TEXT(BUG_BUTTON), "TOGGLEBUG");
@@ -261,7 +261,7 @@
                             getglobal(self:GetName() .. "Tint"):SetVertexColor(.33, 0, 0, .6);
                             getglobal(self:GetName() .. "Label"):SetText(FEEDBACKUI_WELCOMEBUGHEADER);
                             getglobal(self:GetName() .. "Description"):SetText(FEEDBACKUI_WELCOMEBUGTEXT);
-                            getglobal(self:GetName() .. "Icon"):SetTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Bug");
+                            getglobal(self:GetName() .. "Icon"):SetTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Bug");
                             self.button:SetText(FEEDBACKUI_STARTBUG);
                             self.button:SetScript("OnClick", function() FeedbackUI_SlashBug(true) end);
                         </OnLoad>
@@ -290,7 +290,7 @@
                             getglobal(self:GetName() .. "Tint"):SetVertexColor(.8, .1, .8, .2);
                             getglobal(self:GetName() .. "Label"):SetText(FEEDBACKUI_WELCOMESUGGESTHEADER);
                             getglobal(self:GetName() .. "Description"):SetText(FEEDBACKUI_WELCOMESUGGESTTEXT);
-                            getglobal(self:GetName() .. "Icon"):SetTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Suggestion");
+                            getglobal(self:GetName() .. "Icon"):SetTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Suggestion");
                             self.button:SetText(FEEDBACKUI_STARTSUGGESTION);
                             self.button:SetScript("OnClick", function() FeedbackUI_SlashSuggest(true) end);
                         </OnLoad>
@@ -318,7 +318,7 @@
                             getglobal(self:GetName() .. "Tint"):SetVertexColor(0, 0, .33, .6);
                             getglobal(self:GetName() .. "Label"):SetText(FEEDBACKUI_WELCOMESURVEYHEADER);
                             getglobal(self:GetName() .. "Description"):SetText(FEEDBACKUI_WELCOMESURVEYTEXT);
-                            getglobal(self:GetName() .. "Icon"):SetTexture("Interface\\AddOns\\Blizzard_FeedbackUI\\UI-Icon-Survey");
+                            getglobal(self:GetName() .. "Icon"):SetTexture("Interface\\AddOns\\FeedbackUI\\UI-Icon-Survey");
                             self.button:SetText(FEEDBACKUI_STARTSURVEY);
                             self.button:SetScript("OnClick", function() FeedbackUI_SlashSurvey(true) end);
                         </OnLoad>
@@ -422,7 +422,7 @@
     </Size>
     <Layers>
         <Layer level="OVERLAY">
-            <Texture name="$parentIcon" file="Interface\Addons\Blizzard_FeedbackUI\UI-Icon-Blizzard-QuestLog">
+            <Texture name="$parentIcon" file="Interface\Addons\FeedbackUI\UI-Icon-Blizzard-QuestLog">
                 <TexCoords left=".18" right=".82" top=".18" bottom=".82"/>
                 <Size>
                     <AbsDimension x="14" y="14"/>
@@ -480,7 +480,7 @@
     </Anchors>
     <Layers>
         <Layer level="OVERLAY">
-            <Texture name="$parentIcon" file="Interface\Addons\Blizzard_FeedbackUI\UI-Icon-Blizzard-Map">
+            <Texture name="$parentIcon" file="Interface\Addons\FeedbackUI\UI-Icon-Blizzard-Map">
                 <Size>
                     <AbsDimension x="25" y="25"/>
                 </Size>
