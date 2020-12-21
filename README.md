@@ -4,19 +4,13 @@ Client Addon for the Feedback UI: in-game survey, feedback and bugreport
 
 ## Installation
 
-To install the addon you must create a folder inside your /Data/ directory.
+To install the addon you just have to copy the content of this repository inside a folder called FeedbackUI within the /Interface/AddOns directory
 
-This folder must be called "patch-X.MPQ" where X can be any value between 4-9 and A-Z.
-
-You can copy the content of this repository inside that folder then.
-
-Alternatively you can directly clone the repository within the /Data/ folder with this command:
+Alternatively you can directly clone the repository within the /Interface/AddOns folder with this command:
 
 ```
-git clone https://github.com/wowgaming/FeedbackUI patch-X.MPQ
+git clone https://github.com/wowgaming/FeedbackUI
 ```
-
-Remember to replace the X with the character you prefer.
 
 ## How to use
 
