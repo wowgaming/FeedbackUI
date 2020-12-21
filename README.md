@@ -30,6 +30,9 @@ You can open the UI by using that button, otherwise you can leave a feedback of 
 
 This feedbacks will be sent to the server and will be used by internally used by the staff.
 
+## In game video
+
+[![VIDEO](https://img.youtube.com/vi/QHA_k-cOj_8/0.jpg)](https://www.youtube.com/watch?v=QHA_k-cOj_8)
 
 ## Screnshots
 
