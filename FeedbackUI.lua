@@ -5,55 +5,6 @@ C_FEEDBACKUI_UPDATEINTERVAL = .75;
 FEEDBACKUI_OFFSETPIXELS = 20;
 FEEDBACKUI_DELIMITER = "|";
 
-FEEDBACKUI_FIELDS = {
-[0] = "feedbacktype", -- number returns the type, ex: bug feedback or advice
-[1] = "version", -- version = 2.2.2 etc
-[2] = "build", -- build numbers ex: 12340
-[3] = "date", -- Possibly build date or time/date submitted 
-[4] = "realm", -- Realm name
-[5] = "locale", -- language :P
-[6] = "name", -- character name
-[7] = "level", -- character level
-[8] = "race", -- race
-[9] = "sex", -- gender
-[10] = "class", -- herp
-[11] = "map", -- map NAME
-[12] = "zone", -- zone NAME
-[13] = "area", -- area NAME
-[14] = "position", -- positon in coordinates
-[15] = "facing", -- direction coordinates
-[16] = "speed", -- speed (probably walking speed)
-[17] = "chunk", -- chunk? something to do with map tiles?
-[18] = "coords", -- coordinates XYZ
-[19] = "addonsloaded", -- herp
-[20] = "addonsdisabled", -- herp
-[21] = "talents", -- uh I expect this to be the same output as in the database
-[22] = "equipment", -- equipment item IDs
-[23] = "who", -- bugreport npc name
-[24] = "where", -- bugreport where was it stuff
-[25] = "when", -- bugreport time that it went on
-[26] = "type", -- type of bugreport
-[27] = "surveyname", -- survey name (probably easy to make them) :: For instances this returns Deadwind Pass, Karazhan  (portfromzone, porttoinstancezone)
-[28] = "surveyid", -- survey ID (possibly for quests) :: For instances this returns something like Magisters' Terrace1
-[29] = "surveyobjective", -- same as above
-[30] = "surveytype", -- see above too
-[31] = "surveyobtained", -- here
-[32] = "surveysubmitted", -- and here
-[33] = "category1", -- probably graphical / game world / etc types of bug categories
-[34] = "category2",
-[35] = "category3",
-[36] = "category4",
-[37] = "combats", -- amount of recorded combats
-[38] = "deaths", -- amount of deaths
-[39] = "averagelength", -- average length of combat
-[40] = "videooptions", -- CVARs for video options
-[41] = "text", -- text the user types in
-[42] = "soundoptions", -- CVARs for sound options
-[43] = "objectname", -- objectname for the bug report
-[44] = "entityid", -- [CUSTOM] id of the quest/npc/item/spell
-[45] = "entitytype", -- [CUSTOM] type of the quest/npc/item/spell
-[46] = "entitysubtype", -- [CUSTOM] type of the quest/npc/item/spell
-}; 
 
 FEEDBACKUI_CVARS = {
 ["Video"] = {
@@ -150,9 +101,6 @@ g_FeedbackUI_feedbackVars.PVPStats["combats"] = 0;
 g_FeedbackUI_feedbackVars.PVPStats["deaths"] = 0;
 g_FeedbackUI_feedbackVars.PVPStats["averagelength"] = 0;
 
--- custom
-g_FeedbackUI_feedbackVarsCustom = {}
-
 g_FeedbackUI_dropdownMenus = {};
 
 --Local Variables
@@ -191,6 +139,102 @@ local methods = {
 "SetSpell",
 "SetTalent",
 }
+
+
+-- custom
+
+g_FeedbackUI_feedbackVarsCustom = {}
+
+function FeedbackUI_InfoTableToJSON(infoTable)
+	local weekday, month, day, year = CalendarGetDate();
+	infoTable["reportCalendar"] = year .. "-" .. month .. "-" .. day
+	infoTable["reportDate"] = date()
+	infoTable["reportGameTime"] = GetGameTime()
+
+	infoTable["reportSubjectId"] = g_FeedbackUI_feedbackVarsCustom.reportSubjectId
+	infoTable["reportSubjectType"] = g_FeedbackUI_feedbackVarsCustom.reportSubjectType
+	infoTable["reportSubjectSubType"] = g_FeedbackUI_feedbackVarsCustom.reportSubjectSubType
+
+	-- World Map information
+	-- When the map is closed the map info
+	-- is the same of the player position
+	infoTable["currentWorldMapAreaId"] = GetCurrentMapAreaID();
+	infoTable["currentWorldMapZoneId"] = GetCurrentMapZone();
+	infoTable["currentWorldMapMapId"] = GetCurrentMapContinent();
+
+	-- Info about current player position
+	infoTable["currentDungeonMapLevel"] = GetCurrentMapDungeonLevel();
+	infoTable["currentDungeonMapLevelCount"] = GetNumDungeonMapLevels();
+	infoTable["currentCorpsePosition"] = GetCorpseMapPosition();
+	infoTable["currentZonePvPInfo"] = GetZonePVPInfo(); -- Returns PVP info for the current zone.
+	infoTable["currentMinimapZoneText"] = GetMinimapZoneText(); -- Returns the zone text, that is displayed over the minimap.
+	infoTable["currentZoneText"] = GetRealZoneText(); -- Returns either instance name or zone name
+	infoTable["currentZoneText"] = GetSubZoneText(); -- Returns the subzone text, e.g. "The Canals".
+	infoTable["currentZoneText"] = GetZonePVPInfo(); -- Returns PVP info for the current zone.
+	infoTable["currentZoneText"] = GetZoneText(); -- Returns the zone text, e.g. "Stormwind City".
+	local 
+	instanceName, 
+	instanceType, 
+	instanceDifficultyIndex, 
+	instanceDifficultyName, 
+	instanceMaxPlayers, 
+	instancePlayerDifficulty, 
+	instanceIsDynamic = GetInstanceInfo();
+	infoTable["instanceName"] = instanceName;
+	infoTable["instanceType"] = instanceType;
+	infoTable["instanceDifficultyIndex"] = instanceDifficultyIndex;
+	infoTable["instanceDifficultyName"] = instanceDifficultyName;
+	infoTable["instanceMaxPlayers"] = instanceMaxPlayers;
+	infoTable["instancePlayerDifficulty"] = instancePlayerDifficulty;
+	infoTable["instanceIsDynamic"] = instanceIsDynamic;
+
+	-- Unit info
+	FeedbackUI_SetAddUnitInfo(infoTable, "player"); -- The current player.
+	FeedbackUI_SetAddUnitInfo(infoTable, "target"); -- The currently targeted unit.
+	FeedbackUI_SetAddUnitInfo(infoTable, "mouseover");  -- The unit which the mouse is currently (or was most recently) hovering over.
+	FeedbackUI_SetAddUnitInfo(infoTable, "focus"); -- The current player's focus target as selected by the /focus command. (Added in 2.0.0).
+	FeedbackUI_SetAddUnitInfo(infoTable, "npc"); -- The NPC with which the player is currently interacting. You must be interacting with the NPC for this to work
+	FeedbackUI_SetAddUnitInfo(infoTable, "vehicle"); -- The current player's vehicle.
+	FeedbackUI_SetAddUnitInfo(infoTable, "pet"); -- The current player's pet.
+
+	local infoString = "{";
+	for field, value in next, infoTable do
+		if g_FeedbackUI_feedbackVars.PVPStats[field] then
+			value = g_FeedbackUI_feedbackVars.PVPStats[field];
+			infoString = infoString .. "\"" .. field .. "\" : \"" .. string.gsub(tostring(value), "\n", " ") .. "\"";
+			--infoString = infoString .. string.gsub(value, "\n", " ") .. FEEDBACKUI_DELIMITER;
+		else
+			infoString = infoString .. "\"" .. field .. "\" : \"" .. string.gsub(tostring(value), "[%<%>%/%\n]+", " "):gsub(FEEDBACKUI_DELIMITER, " ") .. "\"";
+			-- infoString = infoString .. string.gsub(value, "\n", " "):gsub(FEEDBACKUI_DELIMITER, " ") .. FEEDBACKUI_DELIMITER;
+		end
+
+		if next(infoTable,field) ~= nil then
+			infoString = infoString .. ","
+		end
+	end
+
+	infoString = infoString .. "}"
+
+	return infoString
+end
+
+function FeedbackUI_SetAddUnitInfo(infoTable, unitType)
+	infoTable[unitType .. "GUID"] = UnitGUID(unitType); -- The current player.
+	if ( UnitIsPlayer(unitType) ) then
+		local x, y = GetPlayerMapPosition(unitType)
+		infoTable[unitType .. "Position"] = x..", "..y; -- Returns the position of a unit on the current world map.;
+	end
+	infoTable[unitType .. "IsDeadOrGhost"] = UnitIsDeadOrGhost(unitType);
+	infoTable[unitType .. "Mana"] = UnitMana(unitType);
+	infoTable[unitType .. "ManaMax"] = UnitManaMax(unitType);
+	infoTable[unitType .. "IsOnTaxi"] = UnitOnTaxi(unitType);
+end
+
+function FeedbackUI_SetCustomReportVars(type, id, subtype)
+	g_FeedbackUI_feedbackVarsCustom.reportSubjectId = id;
+	g_FeedbackUI_feedbackVarsCustom.reportSubjectType = type;
+	g_FeedbackUI_feedbackVarsCustom.reportSubjectSubType = subtype;
+end
 
 
 function FeedbackUI_OnLoad (self)
@@ -518,22 +562,10 @@ function FeedbackUI_SendPVPData ()
 	if g_FeedbackUI_feedbackVars.PVPStats["combats"] == 0 then return; end
 	
 	FeedbackUIBugFrameInfoPanel.OnShow(FeedbackUIBugFrameInfoPanel);
-	local infoString = "";
-	
+
 	FeedbackUIBugFrameInfoPanel.infoTable["feedbacktype"] = 3;
-	for index, field in next, FEEDBACKUI_FIELDS do
-		if g_FeedbackUI_feedbackVars.PVPStats[field] then
-			FeedbackUIBugFrameInfoPanel.infoTable[field] = g_FeedbackUI_feedbackVars.PVPStats[field];
-			infoString = infoString .. "<" .. index .. ">" .. string.gsub(FeedbackUIBugFrameInfoPanel.infoTable[field], "\n", " ") .. "</" .. index ..">";
-			--infoString = infoString .. string.gsub(FeedbackUIBugFrameInfoPanel.infoTable[field], "\n", " ") .. FEEDBACKUI_DELIMITER;
-		elseif not ( FeedbackUIBugFrameInfoPanel.infoTable[field] ) then
-			FeedbackUIBugFrameInfoPanel.infoTable[field] = "";
-			--infoString = infoString .. FEEDBACKUI_DELIMITER;
-		else
-			infoString = infoString .. "<" .. index .. ">" .. string.gsub(FeedbackUIBugFrameInfoPanel.infoTable[field], "\n", " "):gsub(FEEDBACKUI_DELIMITER, " ") .. "</" .. index .. ">";
-			-- infoString = infoString .. string.gsub(FeedbackUIBugFrameInfoPanel.infoTable[field], "\n", " "):gsub(FEEDBACKUI_DELIMITER, " ") .. FEEDBACKUI_DELIMITER;
-		end
-	end
+
+	local infoString = FeedbackUI_InfoTableToJSON(infoTable)
 	
 	ReportSuggestion(infoString);
 	UIErrorsFrame:Clear();
@@ -1188,8 +1220,7 @@ function FeedbackUI_SetupItem (link)
 		end
 
 		-- custom
-		g_FeedbackUI_feedbackVarsCustom.id = id;
-		g_FeedbackUI_feedbackVarsCustom.type = "Items";
+		FeedbackUI_SetCustomReportVars("Items", id);
 		
 		FeedbackUI.focus = { ["type"] = "Items", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 		FeedbackUI_SetupWelcome(name, allowSurvey);
@@ -1214,8 +1245,7 @@ function FeedbackUI_SetupItem (link)
 			end
 			
 			-- custom
-			g_FeedbackUI_feedbackVarsCustom.id = id;
-			g_FeedbackUI_feedbackVarsCustom.type = "Spells";
+			FeedbackUI_SetCustomReportVars("Spells", id);
 
 			FeedbackUI.focus = { ["type"] = "Spells", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 			FeedbackUI_SetupWelcome(name, true);
@@ -1237,9 +1267,7 @@ function FeedbackUI_SetupItem (link)
 				end
 
 				-- custom
-				g_FeedbackUI_feedbackVarsCustom.id = id;
-				g_FeedbackUI_feedbackVarsCustom.type = "Spells";
-				g_FeedbackUI_feedbackVarsCustom.subtype = "Talents";
+				FeedbackUI_SetCustomReportVars("Spells", id, "Talents");
 				
 				FeedbackUI.focus = { ["type"] = "Spells", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 				FeedbackUI_SetupWelcome(name, true);
@@ -1266,8 +1294,7 @@ function FeedbackUI_SetupItem (link)
 					FeedbackUI_ReindexQuests();
 
 					-- custom
-					g_FeedbackUI_feedbackVarsCustom.id = id;
-					g_FeedbackUI_feedbackVarsCustom.type = "Quests";
+					FeedbackUI_SetCustomReportVars("Quests", id);
 
 					FeedbackUI.focus = { ["type"] = "Quests", ["name"] = name, ["id"] = id, ["modified"] = time(), ["added"] = time() };
 					FeedbackUI_SetupWelcome(name, true);
@@ -1700,8 +1727,7 @@ function FeedbackUI_SetupItem (link)
 					end
 
 					-- custom
-					g_FeedbackUI_feedbackVarsCustom.id = ( areaName .. zoneName );
-					g_FeedbackUI_feedbackVarsCustom.type = "Areas";
+					FeedbackUI_SetCustomReportVars("Areas", ( areaName .. zoneName ));
 					
 					FeedbackUI.focus = { ["type"] = "Areas", ["modified"] = time(), ["added"] = time(), ["name"] = ( areaName .. zoneName ), ["id"] = ( areaName .. zoneName ) };
 					FeedbackUI_SetupWelcome(areaName .. zoneName, allowSurvey);
@@ -1726,8 +1752,7 @@ function FeedbackUI_SetupItem (link)
 				if ( IsModifiedClick("GENERATEFEEDBACK") ) then
 
 					-- custom
-					g_FeedbackUI_feedbackVarsCustom.id = FEEDBACKUI_AZEROTH;
-					g_FeedbackUI_feedbackVarsCustom.type = "Areas";
+					FeedbackUI_SetCustomReportVars("Areas", FEEDBACKUI_AZEROTH);
 
 					FeedbackUI.focus = { ["type"] = "Areas", ["modified"] = time(), ["added"] = time(), ["name"] = FEEDBACKUI_AZEROTH, ["id"] = FEEDBACKUI_AZEROTH };
 					FeedbackUI_SetupWelcome(FEEDBACKUI_AZEROTH, allowSurvey);
@@ -1748,8 +1773,7 @@ function FeedbackUI_SetupItem (link)
 			function FeedbackUI_OutlandButton_OnClick (...)
 				if ( IsModifiedClick("GENERATEFEEDBACK") ) then
 					-- custom
-					g_FeedbackUI_feedbackVarsCustom.id = FEEDBACKUI_OUTLANDS;
-					g_FeedbackUI_feedbackVarsCustom.type = "Areas";
+					FeedbackUI_SetCustomReportVars("Areas", FEEDBACKUI_OUTLANDS);
 					
 					FeedbackUI.focus = { ["type"] = "Areas", ["modified"] = time(), ["added"] = time(), ["name"] = FEEDBACKUI_OUTLANDS, ["id"] = FEEDBACKUI_OUTLANDS };
 					FeedbackUI_SetupWelcome(FEEDBACKUI_OUTLANDS, allowSurvey);
@@ -1774,7 +1798,7 @@ function FeedbackUI_SetupItem (link)
 			-- Allow users to give feedback by alt left clicking on spawns
 			---------------------------------------------------------------------------------------------------
 			
-			function FeedbackUI_SetupSpawn (spawnName, spawnType)
+			function FeedbackUI_SetupSpawn (spawnName, spawnType, creatureId)
 				local reactionType;
 				
 				if ( not spawnName ) then
@@ -1793,21 +1817,26 @@ function FeedbackUI_SetupItem (link)
 				local name, zone, id = spawnName, ( GetRealZoneText() or "" ), "";
 				-- When SetupSpawn is used from pet/mount frame have the welcome frame show (pet/mount) instead of zone 
 				if (spawnType == 1) then
+					-- custom
+					FeedbackUI_SetCustomReportVars("Mobs", creatureId, "Pet");
+
 					id = zone .. " " .. name;
 					name = name .. ", " .."(Companion)";
 				elseif (spawnType == 2) then
+					-- custom
+					FeedbackUI_SetCustomReportVars("Mobs", creatureId, "Mount");
+
 					id = zone .. " " .. name;
 					name = name .. ", " .."(Mount)";
 				else
+					-- custom
+					FeedbackUI_SetCustomReportVars("Mobs", UnitGUID("mouseover"), "Creature");
+
 					if ( zone ) then
 						id = zone .. " " .. name;
 						name = name .. ", " .. zone;
 					end
 				end
-				
-				-- custom
-				g_FeedbackUI_feedbackVarsCustom.id = id;
-				g_FeedbackUI_feedbackVarsCustom.type = "Mobs";
 
 				FeedbackUI.focus = { ["name"] = spawnName, ["zone"] = zone, ["id"] = id, ["added"] = time(), ["modified"] = time(), ["type"] = "Mobs", ["friendly"] = reactionType }
 				FeedbackUI_SetupWelcome(name);
@@ -1909,13 +1938,13 @@ function FeedbackUI_SetupItem (link)
 			
 			-- Hooking up PetPaperDollFrameCompanionFrame for pets and mounts
 			function FeedbackUI_CompanionButton_OnClick (self)
-				local _, petName = GetCompanionInfo("CRITTER", self:GetID());
-				local _, mountName = GetCompanionInfo("MOUNT", self:GetID());
+				local petId, petName = GetCompanionInfo("CRITTER", self:GetID());
+				local mountId, mountName = GetCompanionInfo("MOUNT", self:GetID());
 				if ( IsModifiedClick("GENERATEFEEDBACK") ) then
 					if ( PetPaperDollFrame.selectedTab == 3 ) then
-						FeedbackUI_SetupSpawn ( mountName, 2 )
+						FeedbackUI_SetupSpawn ( mountName, 2, petId )
 					else
-						FeedbackUI_SetupSpawn ( petName, 1 )
+						FeedbackUI_SetupSpawn ( petName, 1, mountId )
 					end 
 				end
 				
@@ -1980,8 +2009,7 @@ function FeedbackUI_SetupItem (link)
 			
 			function FeedbackUI_SetupVoiceChat ()
 				-- custom
-				g_FeedbackUI_feedbackVarsCustom.id = "Voice Chat";
-				g_FeedbackUI_feedbackVarsCustom.type = "Voice";
+				FeedbackUI_SetCustomReportVars("Voice")
 				
 				FeedbackUI.focus = { ["type"] = "Voice", ["name"] = "Voice Chat", ["id"] = "Voice Chat", ["modified"] = time(), ["added"] = time() }
 				FeedbackUI_SetupWelcome(FEEDBACKUI_VOICECHAT, false);

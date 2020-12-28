@@ -650,19 +650,7 @@ function (line)
 	infoTable["text"] = panel.infoString .. inputString;
 
 
-	-- custom
-	infoTable["entityid"] = g_FeedbackUI_feedbackVarsCustom.id
-	infoTable["entitytype"] = g_FeedbackUI_feedbackVarsCustom.type
-	infoTable["entitysubtype"] = g_FeedbackUI_feedbackVarsCustom.subtype
-
-	local indexLine;
-	for index, field in next, FEEDBACKUI_FIELDS do
-		if ( infoTable[field] ) then
-			infoTable[field] = string.gsub(infoTable[field], "[%<%>%/%\n]+", " ");
-			indexLine = "<" .. index .. ">" .. infoTable[field] .. "</" .. index .. ">";
-			panel.infoString = panel.infoString .. indexLine;
-		end
-	end
+	panel.infoString = FeedbackUI_InfoTableToJSON(infoTable);
 
 	-- for index, field in next, FEEDBACKUI_SURVEYFIELDS do
 	-- if not ( infoTable[field] ) then
@@ -1592,18 +1580,7 @@ function (panel)
 		infoTable["text"] = panel.infoString .. inputString;
 
 		-- custom
-		infoTable["entityid"] = g_FeedbackUI_feedbackVarsCustom.id
-		infoTable["entitytype"] = g_FeedbackUI_feedbackVarsCustom.type
-		infoTable["entitysubtype"] = g_FeedbackUI_feedbackVarsCustom.subtype
-
-		local indexLine;
-		for index, field in next, FEEDBACKUI_FIELDS do
-			if ( infoTable[field] ) then
-				infoTable[field] = string.gsub(infoTable[field], "[%<%>%/%\n]+", " ");
-				indexLine = "<" .. index .. ">" .. infoTable[field] .. "</" .. index .. ">";
-				panel.infoString = panel.infoString .. indexLine;
-			end
-		end
+		panel.infoString = FeedbackUI_InfoTableToJSON(infoTable);
 
 		-- for index, field in next, FEEDBACKUI_SURVEYFIELDS do
 		-- if not ( infoTable[field] ) then
@@ -4121,18 +4098,7 @@ function (line)
 		--panel.infoString = panel.infoString .. (objName or "") .. inputString;
 
 		-- custom
-		infoTable["entityid"] = g_FeedbackUI_feedbackVarsCustom.id
-		infoTable["entitytype"] = g_FeedbackUI_feedbackVarsCustom.type
-		infoTable["entitysubtype"] = g_FeedbackUI_feedbackVarsCustom.subtype
-
-		local indexLine;
-		for index, field in next, FEEDBACKUI_FIELDS do
-			if ( infoTable[field] ) then
-				infoTable[field] = string.gsub(infoTable[field], "[%<%>%/%\n]+", " ");
-				indexLine = "<" .. index .. ">" .. infoTable[field] .. "</" .. index .. ">";
-				panel.infoString = panel.infoString .. indexLine;
-			end
-		end
+		panel.infoString = FeedbackUI_InfoTableToJSON(infoTable);
 
 		-- for index, field in next, FEEDBACKUI_FIELDS do
 		-- if not ( infoTable[field] ) then
