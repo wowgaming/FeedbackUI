@@ -1645,14 +1645,13 @@ function FeedbackUI_SetupItem (link)
 			--hooksecurefunc("QuestLogTitleButton_OnClick", FeedbackUI_QuestLogTitleButton_OnClick);
 			
 			function FeedbackUI_WatchFrameItemHook (self)
-				local watchFunc = self:GetScript("OnClick"); 
 				self:RegisterForClicks("RightButtonUp", "LeftButtonUp")
-				self:SetScript("OnClick", function(...) FeedbackUI_WatchFrameItem_OnClick(self, watchFunc, ...) end);
+				self:HookScript("OnClick", function(...) FeedbackUI_WatchFrameItem_OnClick(self) end);
 			end
 			hooksecurefunc("WatchFrameItem_OnShow", function (...) FeedbackUI_WatchFrameItemHook(...) end );
 			
 			
-			function FeedbackUI_WatchFrameItem_OnClick(self, oldFunc, ...)
+			function FeedbackUI_WatchFrameItem_OnClick()
 				if ( IsModifiedClick("GENERATEFEEDBACK") ) then
 					local itemLink
 					local tooltip = GameTooltip;
@@ -1668,10 +1667,6 @@ function FeedbackUI_SetupItem (link)
 						end
 					end
 					FeedbackUI_SetupItem(itemLink);
-				else
-					if ( oldFunc ) then
-						oldFunc(...);
-					end
 				end
 			end
 			
