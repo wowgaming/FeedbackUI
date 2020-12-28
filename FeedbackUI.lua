@@ -146,6 +146,8 @@ local methods = {
 g_FeedbackUI_feedbackVarsCustom = {}
 
 function FeedbackUI_InfoTableToJSON(infoTable)
+	local addonVersion = GetAddOnMetadata("FeedbackUI", "Version") ;
+	infoTable["addonVersion"] = addonVersion;
 	local weekday, month, day, year = CalendarGetDate();
 	infoTable["reportCalendar"] = year .. "-" .. month .. "-" .. day
 	infoTable["reportDate"] = date()
