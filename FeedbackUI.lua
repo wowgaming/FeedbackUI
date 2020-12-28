@@ -149,7 +149,8 @@ function FeedbackUI_InfoTableToJSON(infoTable)
 	local weekday, month, day, year = CalendarGetDate();
 	infoTable["reportCalendar"] = year .. "-" .. month .. "-" .. day
 	infoTable["reportDate"] = date()
-	infoTable["reportGameTime"] = GetGameTime()
+	local hours,minutes = GetGameTime();
+	infoTable["reportGameTime"] = hours..":"..minutes
 
 	infoTable["reportSubjectId"] = g_FeedbackUI_feedbackVarsCustom.reportSubjectId
 	infoTable["reportSubjectType"] = g_FeedbackUI_feedbackVarsCustom.reportSubjectType
