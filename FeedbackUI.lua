@@ -167,12 +167,18 @@ function FeedbackUI_InfoTableToJSON(infoTable)
 	infoTable["currentDungeonMapLevel"] = GetCurrentMapDungeonLevel();
 	infoTable["currentDungeonMapLevelCount"] = GetNumDungeonMapLevels();
 	infoTable["currentCorpsePosition"] = GetCorpseMapPosition();
-	infoTable["currentZonePvPInfo"] = GetZonePVPInfo(); -- Returns PVP info for the current zone.
+
+
 	infoTable["currentMinimapZoneText"] = GetMinimapZoneText(); -- Returns the zone text, that is displayed over the minimap.
-	infoTable["currentZoneText"] = GetRealZoneText(); -- Returns either instance name or zone name
-	infoTable["currentZoneText"] = GetSubZoneText(); -- Returns the subzone text, e.g. "The Canals".
-	infoTable["currentZoneText"] = GetZonePVPInfo(); -- Returns PVP info for the current zone.
+	infoTable["currentRealZoneText"] = GetRealZoneText(); -- Returns either instance name or zone name
+	infoTable["currentSubZoneText"] = GetSubZoneText(); -- Returns the subzone text, e.g. "The Canals".
 	infoTable["currentZoneText"] = GetZoneText(); -- Returns the zone text, e.g. "Stormwind City".
+
+	local pvpType, isFFA, faction = GetZonePVPInfo();
+	infoTable["currentZonePvPType"] = pvpType; -- Returns PVP info for the current zone.
+	infoTable["currentZonePvPisFFA"] = isFFA; -- Returns PVP info for the current zone.
+	infoTable["currentZonePvPfaction"] = faction; -- Returns PVP info for the current zone.
+
 	local 
 	instanceName, 
 	instanceType, 
