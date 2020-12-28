@@ -231,9 +231,9 @@ function FeedbackUI_SetAddUnitInfo(infoTable, unitType)
 	infoTable[unitType .. "IsOnTaxi"] = UnitOnTaxi(unitType);
 end
 
-function FeedbackUI_SetCustomReportVars(type, id, subtype)
+function FeedbackUI_SetCustomReportVars(reportType, id, subtype)
 	g_FeedbackUI_feedbackVarsCustom.reportSubjectId = id;
-	g_FeedbackUI_feedbackVarsCustom.reportSubjectType = type;
+	g_FeedbackUI_feedbackVarsCustom.reportSubjectType = reportType;
 	g_FeedbackUI_feedbackVarsCustom.reportSubjectSubType = subtype;
 end
 
